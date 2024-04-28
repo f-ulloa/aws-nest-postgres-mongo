@@ -10,6 +10,12 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
+    env:
+      ECR_REPOSITORY: myrepository
+      IMAGE_TAG: ${{ github.sha }}
+      CONTAINER_NAME: myContainer
+      SERVICE: myService
+      CLUSTER: myCluster
 
     steps:
       - name: Checkout code
@@ -29,13 +35,12 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: myrepository
-          IMAGE_TAG: ${{ github.sha }}
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Download existing task definition
         id: download-task-def
@@ -44,15 +49,17 @@ jobs:
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         uses: aws-actions/amazon-ecs-render-task-definition@v1
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         with:
           task-definition: task-definition.json
-          container-name: myContainer
           image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          container-name: ${{ env.CONTAINER_NAME}}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: task-definition.json
-          service: myService
-          cluster: myCluster
+          service: ${{ env.service }}
+          cluster: ${{ env.CLUSTER }}
           wait-for-service-stability: true
