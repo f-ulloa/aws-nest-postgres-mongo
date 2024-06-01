@@ -7,6 +7,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
+import { BranchOfficeModule } from './domain/branch-office/branch-office.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import configuration from './config/configuration';
     }),
     CustomerModule,
     CustomerRequestModule,
+    BranchOfficeModule,
   ],
   controllers: [AppController],
   providers: [],

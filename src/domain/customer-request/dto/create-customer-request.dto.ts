@@ -1,1 +1,3 @@
-export class CreateCustomerRequestDto {}
+export class CreateCustomerRequestDto {
+  branchOffice: string;
+}

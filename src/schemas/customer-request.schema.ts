@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+import { BranchOffice } from './branch-office.schema';
 
 export type CustomerRequestDocument = HydratedDocument<CustomerRequest>;
 
@@ -17,8 +18,12 @@ export class CustomerRequest {
   @Prop()
   comments: string;
 
-  @Prop()
-  branchOffice: string;
+  @Prop({
+    required: true,
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'BranchOffice',
+  })
+  branchOffice: BranchOffice;
 }
 
 export const CustomerRequestSchema =

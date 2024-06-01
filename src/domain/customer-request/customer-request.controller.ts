@@ -37,7 +37,7 @@ export class CustomerRequestController {
     @Param('id') id: string,
     @Body() updateCustomerRequestDto: UpdateCustomerRequestDto,
   ) {
-    return this.customerRequestService.update(+id, updateCustomerRequestDto);
+    return this.customerRequestService.update(id, updateCustomerRequestDto);
   }
 
   @Delete(':id')
