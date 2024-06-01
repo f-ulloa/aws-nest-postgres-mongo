@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   CustomerRequest,
   CustomerRequestSchema,
-} from './schemas/customer-request.schema';
+} from '../../schemas/customer-request.schema';
 
 @Module({
   imports: [

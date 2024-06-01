@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCustomerRequestDto } from './dto/create-customer-request.dto';
 import { UpdateCustomerRequestDto } from './dto/update-customer-request.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { CustomerRequest } from './schemas/customer-request.schema';
+import { CustomerRequest } from '../../schemas/customer-request.schema';
 import { Model } from 'mongoose';
 
 @Injectable()

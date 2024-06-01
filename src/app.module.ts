@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { CustomerModule } from './domain/customer/customer.module';
 import { CustomerRequestModule } from './domain/customer-request/customer-request.module';
-import { Customer } from './domain/customer/entities/customer.entity';
+import { Customer } from './entities/customer.entity';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
